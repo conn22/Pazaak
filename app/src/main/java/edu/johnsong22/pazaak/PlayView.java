@@ -11,31 +11,26 @@ import android.view.SurfaceView;
 
 public class PlayView extends SurfaceView {
 
-    protected int width;
-    protected int height;
-    protected int cardWidth;
-    protected int cardHeight;
+    private Paint text;
 
-    protected Paint text;
-
-    protected Bitmap background;
-    protected Bitmap cardNotPlayed;
-    protected Bitmap mainCards;
-    protected Bitmap addCards;
-    protected Bitmap minusCards;
-    protected Bitmap flipCardsPos;
-    protected Bitmap flipCardsNeg;
-    protected Bitmap specialCards;
+    private Bitmap background;
+    private Bitmap cardNotPlayed;
+    private Bitmap mainCards;
+    private Bitmap addCards;
+    private Bitmap minusCards;
+    private Bitmap flipCardsPos;
+    private Bitmap flipCardsNeg;
+    private Bitmap specialCards;
 
     public PlayView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         //NOTE: NEED TO HARD CODE AT THIS MOMENT
-        height = 1100;
-        width = 2000;
+        int height = 1100;
+        int width = 2000;
 
-        cardHeight = 150;
-        cardWidth = 210;
+        int cardHeight = 150;
+        int cardWidth = 210;
 
         text = new Paint();
         text.setStrokeWidth(5.0f);
@@ -109,19 +104,4 @@ public class PlayView extends SurfaceView {
         canvas.drawBitmap(mainCards, 1665, 720, null);
     }
 
-    public int getScreenHeight() {
-        return height;
-    }
-
-    public int getScreenWidth() {
-        return width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
 }

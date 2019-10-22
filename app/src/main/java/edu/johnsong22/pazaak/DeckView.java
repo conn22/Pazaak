@@ -7,33 +7,29 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.SurfaceView;
 
-public class DeckView extends PlayView {
+public class DeckView extends SurfaceView {
 
-    protected int width;
-    protected int height;
-    protected int cardWidth;
-    protected int cardHeight;
+    private Paint text;
 
-    protected Paint text;
-
-    protected Bitmap background;
-    protected Bitmap cardNotPlayed;
-    protected Bitmap mainCards;
-    protected Bitmap addCards;
-    protected Bitmap minusCards;
-    protected Bitmap flipCardsPos;
-    protected Bitmap flipCardsNeg;
-    protected Bitmap specialCards;
+    private Bitmap background;
+    private Bitmap cardNotPlayed;
+    private Bitmap mainCards;
+    private Bitmap addCards;
+    private Bitmap minusCards;
+    private Bitmap flipCardsPos;
+    private Bitmap flipCardsNeg;
+    private Bitmap specialCards;
 
     public DeckView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        height = 1000;
-        width = 1925;
+        int height = 1000;
+        int width = 1925;
 
-        cardHeight = 130;
-        cardWidth = 200;
+        int cardHeight = 130;
+        int cardWidth = 200;
 
         text = new Paint();
         text.setStrokeWidth(5.0f);
@@ -64,14 +60,12 @@ public class DeckView extends PlayView {
         specialCards = Bitmap.createScaledBitmap(specialCards, cardWidth, cardHeight, true);
     }
 
-    @Override
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(background, 0 , 0, null);
         drawCards(canvas);
         drawSideDeck(canvas);
     }
 
-    @Override
     public void drawCards(Canvas canvas) {
         //SPECIAL ROW
         canvas.drawBitmap(specialCards, 150, 300, null);
@@ -106,7 +100,6 @@ public class DeckView extends PlayView {
 
     }
 
-    @Override
     public void drawSideDeck(Canvas canvas) {
         //ODD CARDS
         canvas.drawBitmap(cardNotPlayed, 1390, 160, null);
