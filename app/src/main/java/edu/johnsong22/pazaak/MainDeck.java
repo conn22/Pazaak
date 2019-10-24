@@ -4,7 +4,7 @@ package edu.johnsong22.pazaak;
 Glen Johnson, Jim Rowe, Grant Stone, James Conn
  */
 
-public class MainDeck extends Cards{
+public class MainDeck extends Cards {
 
     public MainDeck () {
         this.value = (int) (Math.random()*8+1);
