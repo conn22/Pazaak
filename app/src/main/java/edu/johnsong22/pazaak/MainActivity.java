@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
 
         run_test.setOnClickListener(this);
 
-
-
     }
 
     @Override

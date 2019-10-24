@@ -11,6 +11,8 @@ import android.view.SurfaceView;
 
 public class PlayView extends SurfaceView {
 
+    private PazaakGameState pgs;
+
     private Paint text;
 
     private Bitmap background;
@@ -70,38 +72,127 @@ public class PlayView extends SurfaceView {
     }
 
     public void drawCards(Canvas canvas) {
-        canvas.drawBitmap(cardNotPlayed, 300, 150, null);
-        canvas.drawBitmap(cardNotPlayed, 505, 150, null);
-        canvas.drawBitmap(cardNotPlayed, 720, 150, null);
-        canvas.drawBitmap(cardNotPlayed, 1065, 150, null);
-        canvas.drawBitmap(cardNotPlayed, 1275, 150, null);
-        canvas.drawBitmap(cardNotPlayed, 1480, 150, null);
+        int play0 = pgs.getPlayer0cardsUsed();
+        int play1 = pgs.getPlayer0cardsUsed();
 
-        canvas.drawBitmap(cardNotPlayed, 300, 325, null);
-        canvas.drawBitmap(cardNotPlayed, 505, 325, null);
-        canvas.drawBitmap(cardNotPlayed, 720, 325, null);
-        canvas.drawBitmap(cardNotPlayed, 1065, 325, null);
-        canvas.drawBitmap(cardNotPlayed, 1275, 325, null);
-        canvas.drawBitmap(cardNotPlayed, 1480, 325, null);
+        Cards[] player0 = pgs.getPlayer0field();
+        Cards[] player1 = pgs.getPlayer1field();
+        SideDeck player0side;
+        SideDeck player1side;
 
-        canvas.drawBitmap(cardNotPlayed, 300, 500, null);
-        canvas.drawBitmap(cardNotPlayed, 505, 500, null);
-        canvas.drawBitmap(cardNotPlayed, 720, 500, null);
-        canvas.drawBitmap(cardNotPlayed, 1065, 500, null);
-        canvas.drawBitmap(cardNotPlayed, 1275, 500, null);
-        canvas.drawBitmap(cardNotPlayed, 1480, 500, null);
+        int[] play0left = {300, 305, 720};
+        int[] play1left = {1065, 1275, 1480};
+        int[] top = {150, 325, 500};
+
+        // TODO: add card values to draw.
+
+        // Player 0
+        int k = 0;
+        for (int i = 0; i < 9; i++) {
+            if (i == 3 || i == 6) {
+                k++;
+            }
+            if (i < play0) {
+                if (player0[i].getType() == 1) {
+                    player0side = (SideDeck) player0[i];
+                    if (player0side.isFlippable()) {
+                        if (player0side.isNegitive()) {
+                            canvas.drawBitmap(flipCardsNeg,play0left[i],top[k],null);
+                        } else {
+                            canvas.drawBitmap(flipCardsPos,play0left[i],top[k],null);
+                        }
+                    } else if (player0side.isNegitive()) {
+                        canvas.drawBitmap(minusCards,play0left[i],top[k],null);
+                    } else {
+                        canvas.drawBitmap(addCards, play0left[i], top[k], null);
+                    }
+                } else {
+                    canvas.drawBitmap(mainCards, play0left[i], top[k], null);
+                }
+            } else {
+                canvas.drawBitmap(cardNotPlayed, play0left[i], top[k], null);
+            }
+        }
+
+        // Player 1
+        k = 0;
+        for (int i = 0; i < 9; i++) {
+            if (i == 3 || i == 6) {
+                k++;
+            }
+            if (i < play1) {
+                if (player0[i].getType() == 1) {
+                    player1side = (SideDeck) player1[i];
+                    if (player1side.isFlippable()) {
+                        if (player1side.isNegitive()) {
+                            canvas.drawBitmap(flipCardsNeg,play1left[i],top[k],null);
+                        } else {
+                            canvas.drawBitmap(flipCardsPos,play1left[i],top[k],null);
+                        }
+                    } else if (player1side.isNegitive()) {
+                        canvas.drawBitmap(minusCards,play1left[i],top[k],null);
+                    } else {
+                        canvas.drawBitmap(addCards, play1left[i], top[k], null);
+                    }
+                } else {
+                    canvas.drawBitmap(mainCards, play1left[i], top[k], null);
+                }
+            } else {
+                canvas.drawBitmap(cardNotPlayed, play1left[i], top[k], null);
+            }
+        }
     }
 
     public void drawSideDeck(Canvas canvas) {
-        canvas.drawBitmap(mainCards, 120, 720, null);
-        canvas.drawBitmap(mainCards, 325, 720, null);
-        canvas.drawBitmap(mainCards, 530, 720, null);
-        canvas.drawBitmap(mainCards, 740, 720, null);
+        int[] left = { 120, 325, 530, 740 };
+        int top = 720;
 
-        canvas.drawBitmap(mainCards, 1040, 720, null);
-        canvas.drawBitmap(mainCards, 1250, 720, null);
-        canvas.drawBitmap(mainCards, 1455, 720, null);
-        canvas.drawBitmap(mainCards, 1665, 720, null);
+        // TODO: add card values to draw
+
+        SideDeck[] player0 = (SideDeck[]) pgs.getPlayer0side();
+        for (int i = 0; i < 4; i++) {
+            if (player0[i] == null) {
+                canvas.drawBitmap(cardNotPlayed,left[i],top,null);
+            } else if (player0[i].isFlippable()) {
+                if (player0[i].isNegitive()) {
+                    canvas.drawBitmap(flipCardsNeg,left[i],top,null);
+                } else {
+                    canvas.drawBitmap(flipCardsPos,left[i],top,null);
+                }
+            } else if (player0[i].isNegitive()) {
+                canvas.drawBitmap(minusCards,left[i],top,null);
+            } else {
+                canvas.drawBitmap(addCards,left[i],top,null);
+            }
+        }
+
+        //Other Players Side Decks
+        Cards[] player1 = pgs.getPlayer1side();
+        // Card 1
+        if (player1[0] != null) {
+            canvas.drawBitmap(mainCards, 1040, 720, null);
+        } else {
+            canvas.drawBitmap(cardNotPlayed, 1040, 720, null);
+        }
+        // Card 2
+        if (player1[1] != null) {
+            canvas.drawBitmap(mainCards, 1250, 720, null);
+        } else {
+            canvas.drawBitmap(cardNotPlayed, 1250, 720, null);
+        }
+        // Card 3
+        if (player1[2] != null) {
+            canvas.drawBitmap(mainCards, 1455, 720, null);
+        } else {
+            canvas.drawBitmap(cardNotPlayed, 1455, 720, null);
+        }
+        // Card 4
+        if (player1[3] != null) {
+            canvas.drawBitmap(mainCards, 1665, 720, null);
+        } else {
+            canvas.drawBitmap(mainCards, 1665, 720, null);
+        }
+
     }
 
 }
