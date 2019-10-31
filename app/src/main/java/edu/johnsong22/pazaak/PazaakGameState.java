@@ -244,7 +244,7 @@ public class PazaakGameState {
         return stateInfo;
     }
 
-// need to see inside every array and parmeter
+// need to see inside every array and parameter
 
     //  0,   which card to play , any player, player plays a card and tells wich card is played, updating more then just the the return
     public  boolean playCard(int current_player, Cards somecard)
@@ -270,10 +270,13 @@ public class PazaakGameState {
     public boolean stand(int current_player)
     {
         if(getPlayer() == current_player) {  // if it is the human players turn,
-            if (current_player == 0)
+            if (current_player == 0) {
+                setPlayer(getNextPlayer());
                 isPlayer0standing = true;
-            else
+            } else {
+                setPlayer(getNextPlayer());
                 isPlayer1standing = true;
+            }
             return true;
         }
         else
@@ -283,11 +286,12 @@ public class PazaakGameState {
 
     public boolean endTurn(int current_player) // maybe a helper funtion
     {
-        if(getPlayer() == current_player)
-
+        if(getPlayer() == current_player) {
+            setPlayer(getNextPlayer());
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
 }
