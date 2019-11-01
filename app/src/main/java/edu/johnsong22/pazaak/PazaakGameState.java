@@ -283,16 +283,5 @@ public class PazaakGameState {
             return false;
     }
 
-
-    public boolean endTurn(int current_player) // maybe a helper funtion
-    {
-        if(getPlayer() == current_player) {
-            setPlayer(getNextPlayer());
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }
 
