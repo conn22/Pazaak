@@ -120,7 +120,7 @@ public abstract class GameMainActivity extends Activity implements
      * an instance of your TTTLocalGame class which, in turn, would be a
      * subclass of {@link LocalGame}.
      *
-     * @return a new, game-specific instance of a sub-class of the LocalGame
+     * @return a new, game-specific instance of a sub-class of the PazaakLocalGame
      *         class.
      */
     public abstract LocalGame createLocalGame();

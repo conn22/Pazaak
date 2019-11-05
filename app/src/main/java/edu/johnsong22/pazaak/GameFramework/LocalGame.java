@@ -34,7 +34,7 @@ import edu.johnsong22.pazaak.GameFramework.utilities.Tickable;
  */
 public abstract class LocalGame implements Game, Tickable {
     //Tag for logging
-    private static final String TAG = "LocalGame";
+    private static final String TAG = "PazaakLocalGame";
 
     // the stage that the game is in
     private GameStage gameStage = GameStage.BEFORE_GAME;
@@ -437,7 +437,7 @@ public abstract class LocalGame implements Game, Tickable {
 
     /**
      * For setting the number of setup turns in the game.
-     * To be set in the constructor of the game-specific version of LocalGame.
+     * To be set in the constructor of the game-specific version of PazaakLocalGame.
      * @param setupTurnNumber
      */
     public void setNumSetupTurns(int setupTurnNumber){
@@ -463,4 +463,4 @@ public abstract class LocalGame implements Game, Tickable {
         return this.currentSetupTurn;
     }
 
-}// class LocalGame
+}// class PazaakLocalGame
