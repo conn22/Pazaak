@@ -7,18 +7,19 @@ Glen Johnson, Jim Rowe, Grant Stone, James Conn
 public class Cards {
 
     protected int value;
-    protected int type;
+    protected boolean fromSideDeck;
 
-    public Cards() {
-
+    public Cards(int v, boolean sD) {
+        value = v;
+        fromSideDeck = sD;
     }
 
     public int getValue() {
         return value;
     }
 
-    public int getType() {
-        return type;
+    public boolean fromSideDeck() {
+        return fromSideDeck;
     }
 
 }
