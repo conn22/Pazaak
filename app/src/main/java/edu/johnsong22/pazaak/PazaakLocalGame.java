@@ -1,5 +1,4 @@
 package edu.johnsong22.pazaak;
 
-public class PazaakPlayers {
-
+public class PazaakLocalGame {
 }

@@ -6,7 +6,7 @@ package edu.johnsong22.pazaak.GameFramework.utilities;
  * where players have deadlines for performing certain actions (e.g., chess
  * clock, 24-second clock in a basketball simultation).<P>
  *
- * Each LocalGame, HumanPlayer and ComputerPlayer has a GameTimer created
+ * Each PazaakLocalGame, HumanPlayer and ComputerPlayer has a GameTimer created
  * for it when the object is created. If one of these entities needs to have
  * a "tick" at regular intervals, the will typically execute code such as:
  * <PRE>
