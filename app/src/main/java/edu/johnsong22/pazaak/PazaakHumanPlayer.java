@@ -1,5 +1,6 @@
 package edu.johnsong22.pazaak;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,6 +14,9 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements View.OnClickLi
     private Button holdButton = null;
     private Button standButton = null;
 
+    private PlayView PlayView;
+    private PazaakGameState pgs;
+
     private GameMainActivity myActivity;
 
     public PazaakHumanPlayer(String name) {
@@ -25,17 +29,12 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements View.OnClickLi
 
     @Override
     public void receiveInfo(GameInfo info) {
-        //TODO: SET PLAYER TO READ DATA
-        /*
         if (info instanceof PazaakGameState) {
-
-
-
+                pgs = new PazaakGameState((PazaakGameState) info);
             return;
         }
         flash(Color.RED, 10);
         return;
-         */
     }
 
     //TODO: SET PLAYER BUTTON ACTIONS
@@ -53,8 +52,8 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements View.OnClickLi
     public void setAsGui(GameMainActivity activity) {
 
         myActivity = activity;
-
         activity.setContentView(R.layout.activity_game);
+
 
         //TODO: SET GAME RESOURCES
         //this.playerScoreTextView = (TextView)activity.findViewById(R.id.yourScoreValue);
@@ -65,8 +64,8 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements View.OnClickLi
         //this.holdButton          = (Button)activity.findViewById(R.id.holdButton);
 
         //Listen for button presses
-        standButton.setOnClickListener(this);
-        holdButton.setOnClickListener(this);
+        //standButton.setOnClickListener(this);
+        //holdButton.setOnClickListener(this);
 
     }
 

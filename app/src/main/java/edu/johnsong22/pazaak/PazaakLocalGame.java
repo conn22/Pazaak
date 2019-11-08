@@ -3,7 +3,7 @@ package edu.johnsong22.pazaak;
 import edu.johnsong22.pazaak.GameFramework.GamePlayer;
 import edu.johnsong22.pazaak.GameFramework.actionMessage.GameAction;
 import edu.johnsong22.pazaak.GameFramework.LocalGame;
-import edu.johnsong22.pazaak.GameFramework.infoMsg.GameState;
+import edu.johnsong22.pazaak.GameFramework.infoMessage.GameState;
 
 public class PazaakLocalGame extends LocalGame{
   
@@ -35,7 +35,8 @@ public class PazaakLocalGame extends LocalGame{
   }
   
   public void sendUpdatedStateTo(GamePlayer p){
-    p.sendInfo(new PazaakGameState(pGS));
+      PazaakGameState pgsCpy = new PazaakGameState(pGS);
+      p.sendInfo(pgsCpy);
   }
   
   protected String checkIfGameOver(){

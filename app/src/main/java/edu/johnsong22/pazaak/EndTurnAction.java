@@ -8,15 +8,5 @@ public class EndTurnAction extends GameAction {
     public EndTurnAction(GamePlayer player){
       super(player);  
     }
-    
-    public boolean endTurn(int current_player) // maybe a helper funtion
-    {
-        if(getPlayer() == current_player) {
-            setPlayer(getNextPlayer());
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }
