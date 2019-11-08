@@ -4,7 +4,9 @@ package edu.johnsong22.pazaak;
 Glen Johnson, Jim Rowe, Grant Stone, James Conn
  */
 
-public class PazaakGameState {
+import edu.johnsong22.pazaak.GameFramework.infoMessage.GameState;
+
+public class PazaakGameState extends GameState {
 
     private int player;
 
