@@ -222,31 +222,7 @@ public class PazaakGameState extends GameState {
         updateTotals();
     }
 
-    @Override
-    public String toString() {
-        String stateInfo = "\nWho's Turn: " + player + "\nPlayer 0 Rounds won: " + player0wins +
-                "\nPlayer 1 Rounds won: " + player1wins + "\nPlayer 0 total: " + player0total +
-                "\nPlayer 1 total: " + player1total + "\nPlayer 0 cards: ";
-        for (int i = 0; i < player0cardsDrawn; i++) {
-            stateInfo += player0field[i].value + ", ";
-        }
-        stateInfo += "\nPlayer 1 cards: ";
-        for (int i = 0; i < player1cardsDrawn; i++) {
-            stateInfo += player1field[i].value + ", ";
-        }
-        stateInfo += "\nPlayer 0 side cards: ";
-        for (int i = 0; i < 4 - player0cardsUsed; i++) {
-            stateInfo += player0side[i].value + ", ";
-        }
-        stateInfo += "\nPlayer 1 side cards: ";
-        for (int i = 0; i < 4 - player1cardsUsed; i++) {
-            stateInfo += player1side[i].value + ", ";
-        }
-        stateInfo += "\nIs Player 0 standing: " + isPlayer0standing + "\nIs Player 1 standing: " + isPlayer1standing;
-        return stateInfo;
-    }
-
-// need to see inside every array and parameter
+    // need to see inside every array and parameter
 
     //  0,   which card to play , any player, player plays a card and tells wich card is played, updating more then just the the return
     public  boolean playCard(int current_player, Cards somecard)

@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <edu.johnsong22.pazaak.PlayView
-            android:id="@+id/SelectionView"
+            android:id="@+id/PazaakView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".1" />
@@ -53,7 +53,7 @@
                 android:layout_weight=".075" />
 
             <Button
-                android:id="@+id/end"
+                android:id="@+id/endButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

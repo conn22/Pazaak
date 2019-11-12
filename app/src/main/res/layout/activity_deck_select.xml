@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <edu.johnsong22.pazaak.DeckView
-            android:id="@+id/SelectionView"
+            android:id="@+id/PazaakView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".1" />
