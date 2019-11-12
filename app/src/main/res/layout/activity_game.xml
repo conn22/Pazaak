@@ -41,7 +41,7 @@
                 android:layout_weight=".5" />
 
             <Button
-                android:id="@+id/clear"
+                android:id="@+id/hold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -53,7 +53,7 @@
                 android:layout_weight=".075" />
 
             <Button
-                android:id="@+id/random"
+                android:id="@+id/end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,7 +65,7 @@
                 android:layout_weight=".4" />
 
             <Button
-                android:id="@+id/play"
+                android:id="@+id/forfeit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"

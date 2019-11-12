@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import edu.johnsong22.pazaak.GameFramework.GameHumanPlayer;
 import edu.johnsong22.pazaak.GameFramework.GameMainActivity;
 import edu.johnsong22.pazaak.GameFramework.infoMessage.GameInfo;
-import edu.johnsong22.pazaak.GameFramework.R;
+import edu.johnsong22.pazaak.R;
 
 public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
@@ -50,7 +50,7 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
         //TODO: SET PLAYER TO READ DATA
 
         if (info instanceof PazaakGameState) {
-
+        /*
             if (((PazaakGameState) info).getPlayer0wins() == 1) {
                 OneRoundWon.setColor(Color.RED);   //set color to red
 
@@ -64,7 +64,7 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
             }
             player1total.setText("" + ((PazaakGameState) info).getPlayer0total());
             player0total.setText("" + ((PazaakGameState) info).getPlayer1total());
-
+        */
 
             return;
         }
@@ -76,10 +76,10 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
     //TODO: SET PLAYER BUTTON ACTIONS
      public void onClick(View button) {
 
-        if (button.getId() == R.id.standButton) {
+        if (button.getId() == R.id.hold) {
             game.sendAction(new StandAction(this));
         }
-        if (button.getId() == R.id.endTurnButton) {
+        if (button.getId() == R.id.end) {
             game.sendAction(new EndTurnAction(this));
         }
 
