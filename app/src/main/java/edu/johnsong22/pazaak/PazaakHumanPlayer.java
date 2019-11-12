@@ -19,6 +19,9 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
     private Button endTurnButton = null;
     private Button standButton = null;
 
+    private PlayView PlayView;
+    private PazaakGameState pgs;
+
     private GameMainActivity myActivity;
 
 
@@ -66,11 +69,11 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
             player0total.setText("" + ((PazaakGameState) info).getPlayer1total());
         */
 
+            pgs = new PazaakGameState((PazaakGameState) info);
             return;
         }
         flash(Color.RED, 10);
         return;
-
     }
 
     //TODO: SET PLAYER BUTTON ACTIONS
@@ -90,6 +93,7 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
         myActivity = activity;
 
         activity.setContentView(R.layout.activity_game);
+
 
         //TODO: SET GAME RESOURCES
         //this.playerScoreTextView = (TextView)activity.findViewById(R.id.yourScoreValue);

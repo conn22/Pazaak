@@ -68,19 +68,26 @@ public class PlayView extends SurfaceView {
     public void onDraw(Canvas canvas)  {
         canvas.drawBitmap(background, 0 , 0, null);
         drawCards(canvas);
-        drawSideDeck(canvas);
+        //drawSideDeck(canvas);
     }
 
     public void drawCards(Canvas canvas) {
-        int play0 = pgs.getPlayer0cardsUsed();
-        int play1 = pgs.getPlayer0cardsUsed();
+        int play0 = 0;
+        int play1 = 0;
+        Cards[] player0 = null;
+        Cards[] player1 = null;
+        SideDeck player0side = null;
+        SideDeck player1side = null;
 
-        Cards[] player0 = pgs.getPlayer0field();
-        Cards[] player1 = pgs.getPlayer1field();
-        SideDeck player0side;
-        SideDeck player1side;
+        if (pgs != null) {
+            play0 = pgs.getPlayer0cardsUsed();
+            play1 = pgs.getPlayer0cardsUsed();
 
-        int[] play0left = {300, 305, 720};
+            player0 = pgs.getPlayer0field();
+            player1 = pgs.getPlayer1field();
+        }
+
+        int[] play0left = {300, 505, 720};
         int[] play1left = {1065, 1275, 1480};
         int[] top = {150, 325, 500};
 
@@ -93,24 +100,24 @@ public class PlayView extends SurfaceView {
                 k++;
             }
             if (i < play0) {
-                if (player0[i].getType() == 1) {
+                if (player0[i].fromSideDeck()) {
                     player0side = (SideDeck) player0[i];
                     if (player0side.isFlippable()) {
                         if (player0side.isNegitive()) {
-                            canvas.drawBitmap(flipCardsNeg,play0left[i],top[k],null);
+                            canvas.drawBitmap(flipCardsNeg,play0left[i % 3],top[k],null);
                         } else {
-                            canvas.drawBitmap(flipCardsPos,play0left[i],top[k],null);
+                            canvas.drawBitmap(flipCardsPos,play0left[i % 3],top[k],null);
                         }
                     } else if (player0side.isNegitive()) {
-                        canvas.drawBitmap(minusCards,play0left[i],top[k],null);
+                        canvas.drawBitmap(minusCards,play0left[i % 3],top[k],null);
                     } else {
-                        canvas.drawBitmap(addCards, play0left[i], top[k], null);
+                        canvas.drawBitmap(addCards, play0left[i % 3], top[k], null);
                     }
                 } else {
-                    canvas.drawBitmap(mainCards, play0left[i], top[k], null);
+                    canvas.drawBitmap(mainCards, play0left[i % 3], top[k], null);
                 }
             } else {
-                canvas.drawBitmap(cardNotPlayed, play0left[i], top[k], null);
+                canvas.drawBitmap(cardNotPlayed, play0left[i % 3], top[k], null);
             }
         }
 
@@ -121,24 +128,24 @@ public class PlayView extends SurfaceView {
                 k++;
             }
             if (i < play1) {
-                if (player0[i].getType() == 1) {
+                if (player0[i].fromSideDeck()) {
                     player1side = (SideDeck) player1[i];
                     if (player1side.isFlippable()) {
                         if (player1side.isNegitive()) {
-                            canvas.drawBitmap(flipCardsNeg,play1left[i],top[k],null);
+                            canvas.drawBitmap(flipCardsNeg,play1left[i % 3],top[k],null);
                         } else {
-                            canvas.drawBitmap(flipCardsPos,play1left[i],top[k],null);
+                            canvas.drawBitmap(flipCardsPos,play1left[i % 3],top[k],null);
                         }
                     } else if (player1side.isNegitive()) {
-                        canvas.drawBitmap(minusCards,play1left[i],top[k],null);
+                        canvas.drawBitmap(minusCards,play1left[i % 3],top[k],null);
                     } else {
-                        canvas.drawBitmap(addCards, play1left[i], top[k], null);
+                        canvas.drawBitmap(addCards, play1left[i % 3], top[k], null);
                     }
                 } else {
-                    canvas.drawBitmap(mainCards, play1left[i], top[k], null);
+                    canvas.drawBitmap(mainCards, play1left[i % 3], top[k], null);
                 }
             } else {
-                canvas.drawBitmap(cardNotPlayed, play1left[i], top[k], null);
+                canvas.drawBitmap(cardNotPlayed, play1left[i % 3], top[k], null);
             }
         }
     }
@@ -193,6 +200,10 @@ public class PlayView extends SurfaceView {
             canvas.drawBitmap(mainCards, 1665, 720, null);
         }
 
+    }
+
+    public void getPGS(PazaakGameState p) {
+        pgs = p;
     }
 
 }

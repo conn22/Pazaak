@@ -10,8 +10,7 @@ public class SideDeck extends Cards {
     protected boolean isNegitive;
 
     public SideDeck() {
-        this.value = (int) (Math.random()*5+1);
-        this.type = 1;
+        super((int) (Math.random()*5+1), true);
         if(((int) (Math.random())) == 1) {
             isFlippable = true;
             isNegitive = false;
@@ -29,11 +28,6 @@ public class SideDeck extends Cards {
     @Override
     public int getValue() {
         return super.getValue();
-    }
-
-    @Override
-    public int getType() {
-        return super.getType();
     }
 
     public boolean isFlippable() {
