@@ -21,7 +21,7 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
     private PazaakGameState pgs;
 
     private GameMainActivity myActivity;
-    private int player;
+    private int playerID = getPlayerID();
 
     private TextView    player0total = null;
     private TextView    player1total    = null;
@@ -93,12 +93,12 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
 
     }
 
-    public int getPlayer() {
-        return player;
+    public int getPlayerID() {
+        return playerID;
     }
 
     public void setPlayer(int player) {
-        this.player = player;
+        this.playerID = player;
     }
 
 }

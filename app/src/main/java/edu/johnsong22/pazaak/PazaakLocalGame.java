@@ -19,15 +19,21 @@ public class PazaakLocalGame extends LocalGame{
   
   public boolean makeMove(GameAction action){
     if(action instanceof PlayCardAction){
+      //pGS.playCard((((PlayCardAction)action).getPlayer()), ((PlayCardAction)action).getCard());
+
+
       
       return true;
     }else if(action instanceof EndTurnAction){
-      
+      pGS.updateTotals();
+
       return true;
     }else if(action instanceof StandAction){
+      pGS.stand(pGS.getPlayer());
       
       return true;
     }else if(action instanceof QuitAction){
+      //exit game
       
       return true;
     }else
