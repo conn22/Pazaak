@@ -14,6 +14,7 @@ public class PlayView extends SurfaceView {
     private PazaakGameState pgs;
 
     private Paint text;
+    private Paint turnIndacator;
 
     private Bitmap background;
     private Bitmap cardNotPlayed;
@@ -24,19 +25,24 @@ public class PlayView extends SurfaceView {
     private Bitmap flipCardsNeg;
     private Bitmap specialCards;
 
+    private int height = 1100;
+    private int width = 2000;
+    private int cardHeight = 150;
+    private int cardWidth = 210;
+
     public PlayView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         //NOTE: NEED TO HARD CODE AT THIS MOMENT
-        int height = 1100;
-        int width = 2000;
-
-        int cardHeight = 150;
-        int cardWidth = 210;
 
         text = new Paint();
-        text.setStrokeWidth(5.0f);
+        text.setStrokeWidth(6.0f);
+        text.setTextSize(32);
         text.setColor(Color.WHITE);
+
+        turnIndacator = new Paint();
+        turnIndacator.setStrokeWidth(6.0f);
+        turnIndacator.setARGB(100, 0, 255, 70);
 
         background = BitmapFactory.decodeResource(getResources(), R.drawable.game_background);
         background = Bitmap.createScaledBitmap(background, width, height, true);
@@ -68,20 +74,63 @@ public class PlayView extends SurfaceView {
     public void onDraw(Canvas canvas)  {
         canvas.drawBitmap(background, 0 , 0, null);
         drawCards(canvas);
-        //drawSideDeck(canvas);
+        drawTurnIndicator(canvas);
+
+        if(pgs != null) {
+            drawTotal(canvas);
+            drawSideDeck(canvas);
+            drawWins(canvas);
+        }
+        invalidate();
+    }
+
+    public void drawWins(Canvas canvas) {
+        if (pgs.getPlayer0wins() >= 1) {
+            canvas.drawCircle(175, 250, 15, turnIndacator);
+            if (pgs.getPlayer0wins() >= 2) {
+                canvas.drawCircle(175, 350, 15, turnIndacator);
+                if (pgs.getPlayer0wins() == 3) {
+                    canvas.drawCircle(175, 420, 15, turnIndacator);
+                }
+            }
+        }
+
+        if (pgs.getPlayer1wins() >= 1) {
+            canvas.drawCircle(1820, 250, 15, turnIndacator);
+            if (pgs.getPlayer1wins() >= 2) {
+                canvas.drawCircle(1820, 350, 15, turnIndacator);
+                if (pgs.getPlayer1wins() == 3) {
+                    canvas.drawCircle(1820, 420, 15, turnIndacator);
+                }
+            }
+        }
+    }
+
+    public void drawTurnIndicator(Canvas canvas) {
+        if (pgs == null) {
+            return;
+        }
+        if (pgs.getPlayer() == 0) {
+            canvas.drawCircle(190, 105, 35, turnIndacator);
+            return;
+        }
+        canvas.drawCircle(1800, 105, 35, turnIndacator);
+    }
+
+    public void drawTotal(Canvas canvas) {
+        canvas.drawText(String.valueOf(pgs.getPlayer0total()), 905.0f, 102.5f, text);
+        canvas.drawText(String.valueOf(pgs.getPlayer1total()), 1060.0f, 102.5f, text);
     }
 
     public void drawCards(Canvas canvas) {
         int play0 = 0;
         int play1 = 0;
-        Cards[] player0 = null;
-        Cards[] player1 = null;
-        SideDeck player0side = null;
-        SideDeck player1side = null;
+        Card[] player0 = null;
+        Card[] player1 = null;
 
         if (pgs != null) {
             play0 = pgs.getPlayer0cardsUsed();
-            play1 = pgs.getPlayer0cardsUsed();
+            play1 = pgs.getPlayer1cardsUsed();
 
             player0 = pgs.getPlayer0field();
             player1 = pgs.getPlayer1field();
@@ -99,22 +148,36 @@ public class PlayView extends SurfaceView {
             if (i == 3 || i == 6) {
                 k++;
             }
-            if (i < play0) {
-                if (player0[i].fromSideDeck()) {
-                    player0side = (SideDeck) player0[i];
-                    if (player0side.isFlippable()) {
-                        if (player0side.isNegitive()) {
-                            canvas.drawBitmap(flipCardsNeg,play0left[i % 3],top[k],null);
+
+            if (i < play0 && play0 != 0) {
+                if (player0[i] != null) {
+                    if (player0[i].fromSideDeck()) {
+                        if (player0[i].isFlippable()) {
+                            if (player0[i].isNegitive()) {
+                                canvas.drawBitmap(flipCardsNeg, play0left[i % 3], top[k], null);
+                                canvas.drawText(String.valueOf(player0[i].value),
+                                        play0left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
+                            } else {
+                                canvas.drawBitmap(flipCardsPos, play0left[i % 3], top[k], null);
+                                canvas.drawText(String.valueOf(player0[i].value),
+                                        play0left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
+                            }
+                        } else if (player0[i].isNegitive()) {
+                            canvas.drawBitmap(minusCards, play0left[i % 3], top[k], null);
+                            canvas.drawText(String.valueOf(player0[i].value),
+                                    play0left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
                         } else {
-                            canvas.drawBitmap(flipCardsPos,play0left[i % 3],top[k],null);
+                            canvas.drawBitmap(addCards, play0left[i % 3], top[k], null);
+                            canvas.drawText(String.valueOf(player0[i].value),
+                                    play0left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
                         }
-                    } else if (player0side.isNegitive()) {
-                        canvas.drawBitmap(minusCards,play0left[i % 3],top[k],null);
                     } else {
-                        canvas.drawBitmap(addCards, play0left[i % 3], top[k], null);
+                        canvas.drawBitmap(mainCards, play0left[i % 3], top[k], null);
+                        canvas.drawText(String.valueOf(player0[i].value),
+                                play0left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
                     }
                 } else {
-                    canvas.drawBitmap(mainCards, play0left[i % 3], top[k], null);
+                    canvas.drawBitmap(cardNotPlayed, play0left[i % 3], top[k], null);
                 }
             } else {
                 canvas.drawBitmap(cardNotPlayed, play0left[i % 3], top[k], null);
@@ -127,22 +190,35 @@ public class PlayView extends SurfaceView {
             if (i == 3 || i == 6) {
                 k++;
             }
-            if (i < play1) {
-                if (player0[i].fromSideDeck()) {
-                    player1side = (SideDeck) player1[i];
-                    if (player1side.isFlippable()) {
-                        if (player1side.isNegitive()) {
-                            canvas.drawBitmap(flipCardsNeg,play1left[i % 3],top[k],null);
+            if (i < play1 && play1 != 0) {
+                if (player1[i] != null) {
+                    if (player1[i].fromSideDeck()) {
+                        if (player1[i].isFlippable()) {
+                            if (player1[i].isNegitive()) {
+                                canvas.drawBitmap(flipCardsNeg, play1left[i % 3], top[k], null);
+                                canvas.drawText(String.valueOf(player1[i].value),
+                                        play1left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
+                            } else {
+                                canvas.drawBitmap(flipCardsPos, play1left[i % 3], top[k], null);
+                                canvas.drawText(String.valueOf(player1[i].value),
+                                        play1left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
+                            }
+                        } else if (player1[i].isNegitive()) {
+                            canvas.drawBitmap(minusCards, play1left[i % 3], top[k], null);
+                            canvas.drawText(String.valueOf(player1[i].value),
+                                    play1left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
                         } else {
-                            canvas.drawBitmap(flipCardsPos,play1left[i % 3],top[k],null);
+                            canvas.drawBitmap(addCards, play1left[i % 3], top[k], null);
+                            canvas.drawText(String.valueOf(player1[i].value),
+                                    play1left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
                         }
-                    } else if (player1side.isNegitive()) {
-                        canvas.drawBitmap(minusCards,play1left[i % 3],top[k],null);
                     } else {
-                        canvas.drawBitmap(addCards, play1left[i % 3], top[k], null);
+                        canvas.drawBitmap(mainCards, play1left[i % 3], top[k], null);
+                        canvas.drawText(String.valueOf(player1[i].value),
+                                play1left[i % 3] + (float) (cardWidth / 2) - 4.0f, top[k] + (cardHeight / 2) - 1.5f, text);
                     }
                 } else {
-                    canvas.drawBitmap(mainCards, play1left[i % 3], top[k], null);
+                    canvas.drawBitmap(cardNotPlayed, play1left[i % 3], top[k], null);
                 }
             } else {
                 canvas.drawBitmap(cardNotPlayed, play1left[i % 3], top[k], null);
@@ -156,25 +232,34 @@ public class PlayView extends SurfaceView {
 
         // TODO: add card values to draw
 
-        SideDeck[] player0 = (SideDeck[]) pgs.getPlayer0side();
+
+        Card[] player0 = pgs.getPlayer0side();
         for (int i = 0; i < 4; i++) {
             if (player0[i] == null) {
                 canvas.drawBitmap(cardNotPlayed,left[i],top,null);
             } else if (player0[i].isFlippable()) {
                 if (player0[i].isNegitive()) {
                     canvas.drawBitmap(flipCardsNeg,left[i],top,null);
+                    canvas.drawText(String.valueOf(player0[i].value),
+                            left[i] + (float)(cardWidth/2) - 4.0f, top + (cardHeight/2) - 1.5f, text);
                 } else {
                     canvas.drawBitmap(flipCardsPos,left[i],top,null);
+                    canvas.drawText(String.valueOf(player0[i].value),
+                            left[i] + (float)(cardWidth/2) - 4.0f, top + (cardHeight/2) - 1.5f, text);
                 }
             } else if (player0[i].isNegitive()) {
                 canvas.drawBitmap(minusCards,left[i],top,null);
+                canvas.drawText(String.valueOf(player0[i].value),
+                        left[i] + (float)(cardWidth/2) - 4.0f, top + (cardHeight/2) - 1.5f, text);
             } else {
                 canvas.drawBitmap(addCards,left[i],top,null);
+                canvas.drawText(String.valueOf(player0[i].value),
+                        left[i] + (float)(cardWidth/2) - 4.0f, top + (cardHeight/2) - 1.5f, text);
             }
         }
 
         //Other Players Side Decks
-        Cards[] player1 = pgs.getPlayer1side();
+        Card[] player1 = pgs.getPlayer1side();
         // Card 1
         if (player1[0] != null) {
             canvas.drawBitmap(mainCards, 1040, 720, null);

@@ -1,23 +1,24 @@
 package edu.johnsong22.pazaak;
 
+import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.graphics.Color;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 
 import edu.johnsong22.pazaak.GameFramework.GameHumanPlayer;
 import edu.johnsong22.pazaak.GameFramework.GameMainActivity;
 import edu.johnsong22.pazaak.GameFramework.infoMessage.GameInfo;
 
-public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListener {
+public class PazaakHumanPlayer extends GameHumanPlayer implements Button.OnClickListener, SurfaceView.OnTouchListener {
 
     ///TODO: CREATE GAME RESOURCES IT NEEDS FOR LISTENERS
     private Button endTurnButton = null;
     private Button standButton = null;
     private Button forfeitButton = null;
 
-    private PlayView PlayView;
+    private PlayView playView;
     private PazaakGameState pgs;
 
     private GameMainActivity myActivity;
@@ -41,11 +42,10 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
 
     @Override
     public void receiveInfo(GameInfo info) {
-        //TODO: SET PLAYER TO READ DATA
-
         if (info instanceof PazaakGameState) {
 
-            //getTopView().invalidate();
+            pgs = new PazaakGameState((PazaakGameState)info);
+            playView.getPGS(pgs);
 
             return;
         }
@@ -54,7 +54,23 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
     }
 
     @Override
-     public void onClick(View button) {
+    public boolean onTouch(View v, MotionEvent me) {
+
+        if ((me.getX() > 120 || me.getX() < 330) && (me.getY() > 720|| me.getY() < 870)) {
+            game.sendAction(new PlayCardAction(this, pgs.getPlayer0side()[0]));
+        } else if ((me.getX() > 325 || me.getX() < 535) && (me.getY() > 720|| me.getY() < 870)) {
+            game.sendAction(new PlayCardAction(this, pgs.getPlayer0side()[1]));
+        } else if ((me.getX() > 530 || me.getX() < 740) && (me.getY() > 720|| me.getY() < 870)) {
+            game.sendAction(new PlayCardAction(this, pgs.getPlayer0side()[2]));
+        } else if((me.getX() > 740 || me.getX() < 950) && (me.getY() > 720|| me.getY() < 870)) {
+            game.sendAction(new PlayCardAction(this, pgs.getPlayer0side()[3]));
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onClick(View button) {
 
         if (button.getId() == R.id.hold) {
             game.sendAction(new StandAction(this));
@@ -63,9 +79,9 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
             game.sendAction(new EndTurnAction(this));
         }
         if (button.getId() == R.id.forfeit) {
-            //TODO: FILL IN
+            game.sendAction(new PlayCardAction(this,  new Card()));
         }
-
+        playView.invalidate();
     }
 
     public void setAsGui(GameMainActivity activity) {
@@ -74,23 +90,19 @@ public class PazaakHumanPlayer extends GameHumanPlayer implements OnClickListene
 
         myActivity.setContentView(R.layout.activity_game);
 
+        playView = myActivity.findViewById(R.id.PazaakView);
+
         standButton = myActivity.findViewById(R.id.hold);
         endTurnButton = myActivity.findViewById(R.id.endButton);
         forfeitButton = myActivity.findViewById(R.id.forfeit);
-
-        //TODO: SET GAME RESOURCES
-        //this.playerScoreTextView = (TextView)activity.findViewById(R.id.yourScoreValue);
-        //this.oppScoreTextView    = (TextView)activity.findViewById(R.id.oppScoreValue);
-        //this.turnTotalTextView   = (TextView)activity.findViewById(R.id.turnTotalValue);
-        //this.messageTextView     = (TextView)activity.findViewById(R.id.messageTextView);
-        //this.dieImageButton      = (ImageButton)activity.findViewById(R.id.dieButton);
-        //this.holdButton          = (Button)activity.findViewById(R.id.holdButton);
 
         //Listen for button presses
         standButton.setOnClickListener(this);
         endTurnButton.setOnClickListener(this);
         forfeitButton.setOnClickListener(this);
+        playView.setOnTouchListener(this);
 
+        pgs = new PazaakGameState();
     }
 
     public int getPlayerID() {

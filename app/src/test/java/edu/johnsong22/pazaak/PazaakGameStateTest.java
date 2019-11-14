@@ -126,7 +126,7 @@ public class PazaakGameStateTest {
     @Test
     public void playCard() throws Exception {
         PazaakGameState p = new PazaakGameState();
-        Cards card = new SideDeck();
+        Card card = new Card(true);
 
         p.setPlayer(0);
 
