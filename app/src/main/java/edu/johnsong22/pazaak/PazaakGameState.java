@@ -248,12 +248,18 @@ public class PazaakGameState extends GameState {
 
     //  0,   which card to play , any player, player plays a card and tells wich card is played, updating more then just the the return
     public  boolean playCard(int current_player, Card somecard) {
-        if (!canPlay(current_player)) { return endTurn(current_player); }
+        if (somecard == null) { return false; }
+        if (!canPlay(current_player)) { return false; }
         if (getPlayer() == current_player) {  // if it is the human players turn,
             if (current_player == 0) {
                 player0field[player0cardsDrawn] = somecard;
                 addPlayer0cardsUsed();
                 addPlayer0cardsDrawn();
+                for (int i = 0; i < 4; i++) {
+                    if (somecard == player0side[i]) {
+                        player0side[i] = null;
+                    }
+                }
             } else {
                 player1field[player1cardsDrawn] = somecard;
                 addPlayer1cardsUsed();

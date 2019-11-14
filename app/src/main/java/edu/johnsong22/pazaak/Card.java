@@ -19,7 +19,7 @@ public class Card {
     }
 
     public Card(boolean sD) {
-        value = (int) (Math.random()*9)+1;
+        value = (int) (Math.random()*5 )+1;
         fromSideDeck = true;
         if(((int) (Math.random()*2)) == 1) {
             isFlippable = true;
