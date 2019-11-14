@@ -5,14 +5,14 @@ import edu.johnsong22.pazaak.GameFramework.actionMessage.GameAction;
 
 public class PlayCardAction extends GameAction{
 
-  private Cards card;
+  private Card card;
 
-  public PlayCardAction(GamePlayer player, Cards toPlay){
+  public PlayCardAction(GamePlayer player, Card toPlay){
     super(player);
     card = toPlay;
   }
 
-  public Cards getCard() {
+  public Card getCard() {
     return card;
   }
 }

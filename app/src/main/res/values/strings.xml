@@ -2,7 +2,7 @@
     <string name="app_name">Pazaak</string>
     <string name="hold_button">Hold</string>
     <string name="end_turn_button">End Turn</string>
-    <string name="forfeit_button">Forfeit</string>
+    <string name="forfeit_button">Play Random Card</string>
     <string name="clear_button">Clear Deck</string>
     <string name="random_button">Random Deck</string>
     <string name="play_button">Play Pazaak</string>
